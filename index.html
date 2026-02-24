@@ -620,6 +620,11 @@
     </main>
 
     <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    <script>
         // --- 1. GESTION DU FILTRAGE (Vanilla JS) ---
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectItems = document.querySelectorAll('.project-item');
