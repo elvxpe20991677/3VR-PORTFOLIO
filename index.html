@@ -3,100 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PORTFOLIO | Motion Designer</title>
-    
+    <title>Elvis Perros — Motion Designer & Video Editor</title>
+    <meta name="description" content="Portfolio d'Elvis Perros, Motion Designer & Video Editor en recherche d'alternance. Motion Design, Montage Vidéo, Réseaux Sociaux.">
+    <meta property="og:title" content="Elvis Perros — Motion Designer & Video Editor">
+    <meta property="og:description" content="Motion Design, Fiction, Réseaux Sociaux — Portfolio professionnel.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://3vr-portfolio.vercel.app/">
+    <meta property="og:image" content="assets/og-cover.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. CONFIGURATION & VARIABLES --- */
+        /* ============================================
+           1. RESET & VARIABLES
+           ============================================ */
         :root {
-            --bg-color: #111111;
-            --text-color: #f0f0f0;
-            --accent-color: #ffffff;
+            --bg-primary: #0a0a0a;
+            --bg-card: #141414;
+            --text-primary: #f0f0f0;
+            --text-secondary: #999;
+            --text-muted: #555;
+            --accent: #ffffff;
+            --border-subtle: rgba(255,255,255,0.08);
             --cursor-size: 15px;
-            --container-padding: 4vw;
+            --container-padding: clamp(1.25rem, 4vw, 4rem);
             --easing: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
         }
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none; /* Curseur natif caché */
         }
 
+        @media (pointer: fine) {
+            * { cursor: none; }
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
         }
 
         a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img, video { display: block; max-width: 100%; }
 
-        /* --- 2. CUSTOM CURSOR --- */
-        .cursor-dot {
-            position: fixed;
-            top: 0; left: 0;
-            width: 6px; height: 6px;
-            background-color: var(--text-color);
-            border-radius: 50%;
-            z-index: 9999;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
+        /* ============================================
+           2. CUSTOM CURSOR
+           ============================================ */
+        .cursor-dot, .cursor-outline { display: none; }
+
+        @media (pointer: fine) {
+            .cursor-dot {
+                display: block;
+                position: fixed;
+                top: 0; left: 0;
+                width: 6px; height: 6px;
+                background-color: var(--text-primary);
+                border-radius: 50%;
+                z-index: 9999;
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                will-change: left, top;
+            }
+
+            .cursor-outline {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 0; left: 0;
+                width: var(--cursor-size);
+                height: var(--cursor-size);
+                border: 1px solid rgba(240, 240, 240, 0.4);
+                border-radius: 50%;
+                z-index: 9998;
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                transition: width 0.35s var(--easing), height 0.35s var(--easing), background-color 0.35s, border-color 0.35s;
+                will-change: left, top;
+            }
+
+            .cursor-text {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 10px;
+                font-weight: 700;
+                color: #111;
+                opacity: 0;
+                transform: scale(0);
+                transition: all 0.25s var(--easing);
+                user-select: none;
+            }
+
+            body.hover-project .cursor-outline {
+                width: 80px; height: 80px;
+                background-color: #fff;
+                border-color: #fff;
+                mix-blend-mode: exclusion;
+            }
+            body.hover-project .cursor-text { opacity: 1; transform: scale(1); }
+
+            body.hover-link .cursor-outline {
+                width: 40px; height: 40px;
+                background-color: rgba(255,255,255,0.08);
+                backdrop-filter: blur(4px);
+                border-color: rgba(255,255,255,0.15);
+            }
         }
 
-        .cursor-outline {
-            position: fixed;
-            top: 0; left: 0;
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            border: 1px solid rgba(240, 240, 240, 0.5);
-            border-radius: 50%;
-            z-index: 9998;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s var(--easing), height 0.3s var(--easing), background-color 0.3s, border-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cursor-text {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            color: #111;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.2s;
-        }
-
-        body.hover-project .cursor-outline {
-            width: 80px;
-            height: 80px;
-            background-color: #fff;
-            border-color: #fff;
-            mix-blend-mode: exclusion;
-        }
-
-        body.hover-project .cursor-text {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        body.hover-link .cursor-outline {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(2px);
-            border-color: transparent;
-        }
-
-        /* --- 3. LAYOUT --- */
+        /* ============================================
+           3. LAYOUT
+           ============================================ */
         .container {
             padding: 0 var(--container-padding);
             width: 100%;
@@ -104,26 +132,30 @@
             margin: 0 auto;
         }
 
-        /* --- 4. HERO SECTION --- */
+        /* ============================================
+           4. HERO — PLEIN ÉCRAN
+           ============================================ */
         .hero {
-            height: 80vh;
+            height: 100vh;
+            height: 100dvh;
             width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
             position: relative;
+            overflow: hidden;
         }
 
         .hero-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(3.5rem, 14vw, 16rem);
+            font-size: clamp(3rem, 12vw, 15rem);
             font-weight: 700;
-            line-height: 0.85;
+            line-height: 0.88;
             text-transform: uppercase;
             letter-spacing: -0.03em;
-            color: var(--text-color);
-            margin-bottom: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
         }
 
         .line-mask {
@@ -137,227 +169,665 @@
             animation: textReveal 1.2s var(--easing) forwards;
         }
 
-        .hero-title .line-1 span { animation-delay: 0.1s; }
-        .hero-title .line-2 span { animation-delay: 0.3s; }
+        .hero-title .line-1 span { animation-delay: 0.15s; }
+        .hero-title .line-2 span { animation-delay: 0.35s; }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            font-size: clamp(0.8rem, 1.3vw, 1.15rem);
             font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
             opacity: 0;
-            animation: fadeIn 1s ease-out forwards 0.8s;
-            padding-left: 0.5vw;
+            animation: fadeIn 1s var(--ease-out) forwards 0.7s;
+            padding-left: 0.3vw;
         }
 
-        /* --- 5. FILTER NAVIGATION --- */
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid rgba(80, 220, 100, 0.35);
+            border-radius: 50px;
+            font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+            font-weight: 500;
+            color: #5eda72;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            animation: fadeIn 1s var(--ease-out) forwards 1s;
+        }
+
+        .hero-badge::before {
+            content: '';
+            display: inline-block;
+            width: 7px; height: 7px;
+            background: #5eda72;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s var(--ease-out) forwards 1.4s;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.4); opacity: 0.3; }
+        }
+
+        /* ============================================
+           5. ABOUT SECTION
+           ============================================ */
+        .about {
+            padding: clamp(3rem, 6vw, 6rem) 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(2rem, 4vw, 4rem);
+            align-items: start;
+        }
+
+        .about-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text {
+            font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+            line-height: 1.75;
+            color: var(--text-secondary);
+            max-width: 55ch;
+        }
+
+        .about-text strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .about-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .detail-group h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-group p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .about-cta {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.4rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 50px;
+            transition: all 0.3s var(--easing);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border-color: var(--border-subtle);
+        }
+        .btn-outline:hover { border-color: var(--text-primary); }
+
+        .btn svg {
+            width: 14px; height: 14px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           6. FILTER NAVIGATION
+           ============================================ */
         .filter-nav {
-            padding: 2rem 0 4rem 0;
+            padding: 1.2rem 0;
             position: sticky;
-            top: 20px;
+            top: 0;
             z-index: 100;
-            mix-blend-mode: difference;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .filter-list {
             display: flex;
-            gap: 3rem;
-            list-style: none;
+            gap: clamp(1rem, 2.5vw, 2.5rem);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 0.3rem 0;
         }
+
+        .filter-list::-webkit-scrollbar { display: none; }
 
         .filter-btn {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.75rem, 0.9vw, 0.9rem);
             font-weight: 500;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
             background: none;
             border: none;
-            color: #888;
-            padding: 0;
+            color: var(--text-muted);
+            padding: 0.5rem 0;
             transition: color 0.3s ease;
             position: relative;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .filter-btn:hover { color: #fff; }
-        .filter-btn.active { color: #fff; }
+        @media (pointer: fine) { .filter-btn { cursor: none; } }
+
+        .filter-btn:hover { color: var(--text-primary); }
+        .filter-btn.active { color: var(--text-primary); }
 
         .filter-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: 0; left: 0;
             width: 100%;
             height: 2px;
-            background-color: #fff;
+            background-color: var(--text-primary);
+            animation: scaleIn 0.3s var(--easing);
+            transform-origin: left;
         }
 
-        /* --- 6. GRID GALLERY --- */
+        @keyframes scaleIn {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        /* ============================================
+           7. PROJECT GRID
+           ============================================ */
         .gallery {
-            padding-bottom: 10vh;
+            padding: clamp(2rem, 4vw, 4rem) 0 10vh;
             width: 100%;
-            min-height: 50vh;
+            min-height: 40vh;
         }
 
         .project-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4vw;
+            gap: clamp(1rem, 3vw, 3vw);
         }
 
         .project-item {
             position: relative;
-            background-color: #1a1a1a;
+            background-color: var(--bg-card);
             overflow: hidden;
             aspect-ratio: 16/9;
-            border-radius: 2px; 
-            transition: opacity 0.4s var(--easing), transform 0.4s var(--easing);
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(25px);
         }
 
         .project-item.hidden { display: none; }
-        
-        .project-item.fade-in {
+
+        .project-item.visible {
             animation: itemFadeIn 0.6s var(--easing) forwards;
         }
 
         .media-container {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             position: relative;
             display: block;
         }
 
         .project-video {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
             position: absolute;
             top: 0; left: 0;
             z-index: 1;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
         }
 
         .project-thumb {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
             position: absolute;
             top: 0; left: 0;
             z-index: 2;
-            transition: opacity 0.4s ease;
-            filter: saturate(0) contrast(1.1);
+            transition: opacity 0.5s ease, filter 0.5s ease;
+            filter: saturate(0) contrast(1.05) brightness(0.85);
         }
 
-        .project-item:hover .project-thumb { opacity: 0; }
-        .project-item:hover .project-video { opacity: 1; }
+        @media (pointer: fine) {
+            .project-item:hover .project-thumb { opacity: 0; }
+            .project-item:hover .project-video { opacity: 1; }
+            .project-item:hover { transform: translateY(-3px); }
+        }
+
+        .project-item.playing .project-thumb { opacity: 0; }
+        .project-item.playing .project-video { opacity: 1; }
 
         .project-meta {
             position: absolute;
-            bottom: 1rem;
-            left: 1rem;
+            bottom: 0; left: 0; right: 0;
             z-index: 10;
             pointer-events: none;
+            padding: clamp(1.5rem, 3vw, 3rem) clamp(0.8rem, 1.2vw, 1.2rem) clamp(0.8rem, 1.2vw, 1.2rem);
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
             opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
+            transform: translateY(5px);
+            transition: all 0.35s var(--easing);
         }
-        
-        .project-item:hover .project-meta {
+
+        @media (pointer: fine) {
+            .project-item:hover .project-meta {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-item.playing .project-meta {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .meta-title { font-size: 1rem; font-weight: 600; text-transform: uppercase; }
-        .meta-cat { font-size: 0.75rem; color: #ccc; }
+        .meta-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(0.8rem, 1vw, 1rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.15rem;
+        }
 
-        /* --- 7. FOOTER --- */
+        .meta-cat {
+            font-size: clamp(0.65rem, 0.75vw, 0.75rem);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .meta-tools {
+            display: flex;
+            gap: 0.35rem;
+            margin-top: 0.45rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-tag {
+            font-size: 0.62rem;
+            padding: 0.15rem 0.45rem;
+            background: rgba(255,255,255,0.12);
+            border-radius: 3px;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 0.02em;
+        }
+
+        /* ============================================
+           8. FOOTER
+           ============================================ */
         .footer {
-            height: 60vh;
+            padding: clamp(4rem, 8vw, 8rem) 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             text-align: center;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
         }
 
         .footer-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(1.8rem, 5vw, 4.5rem);
             margin-bottom: 2rem;
             font-weight: 700;
             text-transform: uppercase;
+            line-height: 1.1;
         }
 
         .footer-mail {
-            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-size: clamp(1rem, 2.5vw, 2.2rem);
             font-weight: 300;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-            padding-bottom: 5px;
+            border-bottom: 2px solid rgba(255,255,255,0.15);
+            padding-bottom: 4px;
             transition: border-color 0.3s, color 0.3s;
         }
+        .footer-mail:hover { border-color: #fff; color: #fff; }
 
-        .footer-mail:hover {
-            border-color: #fff;
-            color: #fff;
+        .footer-socials {
+            display: flex;
+            gap: clamp(1rem, 2vw, 2rem);
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* --- 8. ANIMATIONS --- */
+        .social-link {
+            font-size: clamp(0.75rem, 0.85vw, 0.85rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            transition: color 0.3s;
+            padding: 0.3rem 0;
+            position: relative;
+        }
+
+        .social-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--text-primary);
+            transition: width 0.3s var(--easing);
+        }
+        .social-link:hover { color: var(--text-primary); }
+        .social-link:hover::after { width: 100%; }
+
+        .footer-copy {
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ============================================
+           9. ANIMATIONS
+           ============================================ */
         @keyframes textReveal { to { transform: translateY(0); } }
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes itemFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
 
-        /* --- 9. RESPONSIVE --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--easing), transform 0.8s var(--easing);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           10. RESPONSIVE
+           ============================================ */
+
+        /* Tablette */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mobile */
         @media (max-width: 768px) {
-            .project-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .filter-list { gap: 1.5rem; overflow-x: auto; padding-bottom: 10px; }
-            .filter-btn { font-size: 0.9rem; white-space: nowrap; }
-            .cursor-dot, .cursor-outline { display: none; }
-            * { cursor: auto !important; }
-            .project-meta { opacity: 1; transform: translateY(0); background: rgba(0,0,0,0.5); padding: 5px 10px; }
-            .project-thumb { filter: none; }
+            .hero {
+                justify-content: flex-end;
+                padding-bottom: 15vh;
+            }
+
+            .hero-title {
+                font-size: clamp(2.8rem, 15vw, 5rem);
+                line-height: 0.9;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .project-item {
+                border-radius: 6px;
+            }
+
+            /* Mobile: toujours afficher meta */
+            .project-meta {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+
+            .project-thumb {
+                filter: saturate(0.7) contrast(1) brightness(0.9);
+            }
+
+            .scroll-indicator { display: none; }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-cta {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .footer-socials {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+        }
+
+        /* Petit mobile */
+        @media (max-width: 400px) {
+            :root {
+                --container-padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-badge {
+                font-size: 0.65rem;
+                padding: 0.4rem 0.9rem;
+            }
+
+            .filter-list {
+                gap: 0.8rem;
+            }
+
+            .filter-btn {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Très grand écran */
+        @media (min-width: 1800px) {
+            .project-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline>
+    <!-- CURSOR -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline">
         <span class="cursor-text">PLAY</span>
     </div>
 
     <main class="container">
-        
+
+        <!-- ===== HERO — PLEIN ÉCRAN ===== -->
         <header class="hero">
             <h1 class="hero-title">
-                <span class="line-mask line-1">
-                    <span>Elvis</span>
-                </span>
-                <span class="line-mask line-2">
-                    <span>PERROS</span>
-                </span>
+                <span class="line-mask line-1"><span>Elvis</span></span>
+                <span class="line-mask line-2"><span>PERROS</span></span>
             </h1>
-            <div class="hero-subtitle">
-                Motion Designer & Video Editor
+            <p class="hero-subtitle">Motion Designer & Video Editor</p>
+            <div class="hero-badge">Disponible en alternance — 2026</div>
+
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
             </div>
         </header>
 
-        <nav class="filter-nav">
+        <!-- ===== À PROPOS ===== -->
+        <section class="about reveal" id="about">
+            <div class="about-grid">
+                <div>
+                    <p class="about-label">À propos</p>
+                    <p class="about-text">
+                        Je suis <strong>Elvis Perros</strong>, étudiant passionné par le <strong>motion design</strong> et le montage vidéo.
+                        Je recherche une <strong>alternance</strong> pour continuer à développer mes compétences au sein d'une équipe créative.
+                        Mon approche : des animations rythmées, un sens du détail et une vraie culture visuelle.
+                    </p>
+                </div>
+                <div class="about-details">
+                    <div class="detail-group">
+                        <h3>Compétences</h3>
+                        <ul class="skill-list">
+                            <li class="skill-tag">After Effects</li>
+                            <li class="skill-tag">Premiere Pro</li>
+                            <li class="skill-tag">Illustrator</li>
+                            <li class="skill-tag">Photoshop</li>
+                            <li class="skill-tag">DaVinci Resolve</li>
+                            <li class="skill-tag">Cinema 4D</li>
+                        </ul>
+                    </div>
+                    <div class="detail-group">
+                        <h3>Alternance</h3>
+                        <p>Disponible dès septembre 2026 · Rythme : 2j/3j · Toulouse</p>
+                    </div>
+                    <div class="about-cta">
+                        <a href="assets/PERROS ELVIS - CV.pdf" target="_blank" rel="noopener" class="btn btn-primary" data-cursor-type="link">
+                            <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4h14v-2H5v2z"/></svg>
+                            Télécharger mon CV
+                        </a>
+                        <a href="mailto:3vr.contact@gmail.com" class="btn btn-outline" data-cursor-type="link">
+                            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            Me contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== FILTRES ===== -->
+        <nav class="filter-nav" role="navigation" aria-label="Filtrer les projets">
             <ul class="filter-list">
-                <li><button class="filter-btn active hover-link" data-filter="featured">Accueil</button></li>
-                <li><button class="filter-btn hover-link" data-filter="motion">Motion Design</button></li>
-                <li><button class="filter-btn hover-link" data-filter="fiction">Fiction / Docu</button></li>
-                <li><button class="filter-btn hover-link" data-filter="social">Réseaux Sociaux</button></li>
+                <li><button class="filter-btn active" data-filter="featured" aria-pressed="true" data-cursor-type="link">Sélection</button></li>
+                <li><button class="filter-btn" data-filter="motion" aria-pressed="false" data-cursor-type="link">Motion Design</button></li>
+                <li><button class="filter-btn" data-filter="fiction" aria-pressed="false" data-cursor-type="link">Fiction / Docu</button></li>
+                <li><button class="filter-btn" data-filter="social" aria-pressed="false" data-cursor-type="link">Réseaux Sociaux</button></li>
             </ul>
         </nav>
 
+        <!-- ===== PROJETS ===== -->
         <section class="gallery">
             <div class="project-grid" id="projectGrid">
 
-                <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1lYFiWVdc0cCKZSN7TdsHGXWoZJTjKMLy/view?usp=sharing" target="_blank" class="media-container">
+                <!-- =========================================
+                     MOTION DESIGN (8 projets) — par pertinence
+                     ========================================= -->
+
+               <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
+                    <a href="project.html?id=projet1" class="media-container">
                         <div class="project-meta">
                             <div class="meta-title">Projet 1</div>
                             <div class="meta-cat">Motion Design</div>
@@ -367,21 +837,32 @@
                     </a>
                 </article>
 
-                <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1VwU-CZ10KraNsbTU079rKvWHQ0AnYCHk/view?usp=sharing" target="_blank" class="media-container">
+                                <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
+                    <a href="project.html?id=projet22" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 7</div>
-                            <div class="meta-cat">Motion Design</div>
+                            <div class="meta-title">Projet 2</div>
+                            <div class="meta-cat">Motion design</div>
                         </div>
-                        <img src="assets/cover7.jpg" class="project-thumb" alt="Cover">
-                        <video class="project-video" muted loop playsinline preload="none"><source src="assets/projet7.mp4" type="video/mp4"></video>
+                        <img src="assets/cover22.jpg" class="project-thumb" alt="Cover">
+                        <video class="project-video" muted loop playsinline preload="none"><source src="assets/projet22.mp4" type="video/mp4"></video>
                     </a>
                 </article>
-
-                <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1zO-YNvgzdw7AK3tFelOAJ8qxvSL48Vqo/view?usp=sharing" target="_blank" class="media-container">
+                
+                <article class="project-item" data-category="motion" data-featured="true" data-cursor-type="project">
+                    <a href="project.html?id=projet20" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 8</div>
+                            <div class="meta-title">Projet 3</div>
+                            <div class="meta-cat">Motion Design</div>
+                        </div>
+                        <img src="assets/cover20.jpg" class="project-thumb" alt="Cover">
+                        <video class="project-video" muted loop playsinline preload="none"><source src="assets/projet20.mp4" type="video/mp4"></video>
+                    </a>
+                </article>
+                
+                <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
+                    <a href="project.html?id=projet8" class="media-container">
+                        <div class="project-meta">
+                            <div class="meta-title">Projet 4</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
                         <img src="assets/cover8.jpg" class="project-thumb" alt="Cover">
@@ -390,9 +871,9 @@
                 </article>
 
                 <article class="project-item" data-category="motion" data-featured="true" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1Jss98wrgxVTlnZP0ycqL-YDO_7u6APFU/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet13" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 13</div>
+                            <div class="meta-title">Projet 5</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
                         <img src="assets/cover13.jpg" class="project-thumb" alt="Cover">
@@ -401,9 +882,9 @@
                 </article>
 
                 <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1V5bzlu9LsnXePdOVM-UC-u2CFq7w6_u3/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet16" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 16</div>
+                            <div class="meta-title">Projet 6</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
                         <img src="assets/cover16.jpg" class="project-thumb" alt="Cover">
@@ -412,9 +893,9 @@
                 </article>
 
                 <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1VYgUEkG3h4YSTaAGcWeJmmdvw_CgIhdp/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet17" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 17</div>
+                            <div class="meta-title">Projet 7</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
                         <img src="assets/cover17.jpg" class="project-thumb" alt="Cover">
@@ -423,9 +904,9 @@
                 </article>
 
                 <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1zNddDBbYE79S8_fHs2Wfu8iIaw3C2Fj_/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet18" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 18</div>
+                            <div class="meta-title">Projet 8</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
                         <img src="assets/cover18.jpg" class="project-thumb" alt="Cover">
@@ -434,9 +915,9 @@
                 </article>
 
                 <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1EDrYQT8aDUnBI_s3JPc5J-QvhBgTkOLl/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet19" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 19</div>
+                            <div class="meta-title">Projet 9</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
                         <img src="assets/cover19.jpg" class="project-thumb" alt="Cover">
@@ -444,21 +925,21 @@
                     </a>
                 </article>
 
-                <article class="project-item" data-category="motion" data-featured="true" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1IDI2yjT6VwmJSfuKtCGk5nKEYQqaXSYC/view?usp=sharing" target="_blank" class="media-container">
+                <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
+                    <a href="project.html?id=projet7" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 20</div>
+                            <div class="meta-title">Projet 10</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
-                        <img src="assets/cover20.jpg" class="project-thumb" alt="Cover">
-                        <video class="project-video" muted loop playsinline preload="none"><source src="assets/projet20.mp4" type="video/mp4"></video>
+                        <img src="assets/cover7.jpg" class="project-thumb" alt="Cover">
+                        <video class="project-video" muted loop playsinline preload="none"><source src="assets/projet7.mp4" type="video/mp4"></video>
                     </a>
                 </article>
 
                 <article class="project-item" data-category="motion" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1aiXu7RrS6SXcyqWLyEB06iP7QkqG8X5a/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet21" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 21</div>
+                            <div class="meta-title">Projet 11</div>
                             <div class="meta-cat">Motion Design</div>
                         </div>
                         <img src="assets/cover21.jpg" class="project-thumb" alt="Cover">
@@ -467,9 +948,9 @@
                 </article>
 
                 <article class="project-item" data-category="fiction" data-featured="true" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1IPbNWbakVbxOTtXaUeB-ghFUCuCoynU2/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet2" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 2</div>
+                            <div class="meta-title">Projet 12</div>
                             <div class="meta-cat">Fiction / Docu</div>
                         </div>
                         <img src="assets/cover2.jpg" class="project-thumb" alt="Cover">
@@ -478,9 +959,9 @@
                 </article>
 
                 <article class="project-item" data-category="fiction" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1-fa482so41z8b5fzKMWPiQHra7UwV8R_/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet3" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 3</div>
+                            <div class="meta-title">Projet 13</div>
                             <div class="meta-cat">Fiction / Docu</div>
                         </div>
                         <img src="assets/cover3.jpg" class="project-thumb" alt="Cover">
@@ -489,9 +970,9 @@
                 </article>
 
                 <article class="project-item" data-category="fiction" data-featured="true" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/197Y8he967PQoP0mOd2XVcWZVmbSdWS6X/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet4" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 4</div>
+                            <div class="meta-title">Projet 14</div>
                             <div class="meta-cat">Fiction / Docu</div>
                         </div>
                         <img src="assets/cover4.jpg" class="project-thumb" alt="Cover">
@@ -500,9 +981,9 @@
                 </article>
 
                 <article class="project-item" data-category="fiction" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/11vOglsgqMkOBhEoVEoQlc6beYrFIE9bZ/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet6" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 6</div>
+                            <div class="meta-title">Projet 15</div>
                             <div class="meta-cat">Fiction / Docu</div>
                         </div>
                         <img src="assets/cover6.jpg" class="project-thumb" alt="Cover">
@@ -511,9 +992,9 @@
                 </article>
 
                 <article class="project-item" data-category="fiction" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1qxzsnHsT87XGhpbniJ8OFsh0IYAjtaRT/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet9" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 9</div>
+                            <div class="meta-title">Projet 16</div>
                             <div class="meta-cat">Fiction / Docu</div>
                         </div>
                         <img src="assets/cover9.jpg" class="project-thumb" alt="Cover">
@@ -522,9 +1003,9 @@
                 </article>
 
                 <article class="project-item" data-category="fiction" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1C4XPmuHdv48JLRGiIJ2hCNhYfd89EPxZ/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet12" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 12</div>
+                            <div class="meta-title">Projet 17</div>
                             <div class="meta-cat">Fiction / Docu</div>
                         </div>
                         <img src="assets/cover12.jpg" class="project-thumb" alt="Cover">
@@ -533,9 +1014,9 @@
                 </article>
 
                 <article class="project-item" data-category="social" data-featured="true" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1tQghgamArfgHhXLyNFjZrtseeI-VYNcv/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet5" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 5</div>
+                            <div class="meta-title">Projet 18</div>
                             <div class="meta-cat">Réseaux Sociaux</div>
                         </div>
                         <img src="assets/cover5.jpg" class="project-thumb" alt="Cover">
@@ -544,9 +1025,9 @@
                 </article>
 
                 <article class="project-item" data-category="social" data-featured="true" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1NZQQsy80xv9WeHf0LtZWPfP3gnIvdIdE/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet10" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 10</div>
+                            <div class="meta-title">Projet 19</div>
                             <div class="meta-cat">Réseaux Sociaux</div>
                         </div>
                         <img src="assets/cover10.jpg" class="project-thumb" alt="Cover">
@@ -555,9 +1036,9 @@
                 </article>
 
                 <article class="project-item" data-category="social" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1_FPDEywTMy2dgfbO4J84HXi7Rcmj0o78/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet11" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 11</div>
+                            <div class="meta-title">Projet 20</div>
                             <div class="meta-cat">Réseaux Sociaux</div>
                         </div>
                         <img src="assets/cover11.jpg" class="project-thumb" alt="Cover">
@@ -566,9 +1047,9 @@
                 </article>
 
                 <article class="project-item" data-category="social" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1hrh02BpUFi_d6gnYfecAyZwyq3LRMuYs/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet14" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 14</div>
+                            <div class="meta-title">Projet 21</div>
                             <div class="meta-cat">Réseaux Sociaux</div>
                         </div>
                         <img src="assets/cover14.jpg" class="project-thumb" alt="Cover">
@@ -577,9 +1058,9 @@
                 </article>
 
                 <article class="project-item" data-category="social" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1TMl2nG6sB43kg5GYTQU5v7HQGmO6KqAT/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet15" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 15</div>
+                            <div class="meta-title">Projet 22</div>
                             <div class="meta-cat">Réseaux Sociaux</div>
                         </div>
                         <img src="assets/cover15.jpg" class="project-thumb" alt="Cover">
@@ -588,20 +1069,9 @@
                 </article>
 
                 <article class="project-item" data-category="social" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1yk95B02tDOcXdlZQ-13rW5sn-rUbPsjk/view?usp=sharing" target="_blank" class="media-container">
+                    <a href="project.html?id=projet23" class="media-container">
                         <div class="project-meta">
-                            <div class="meta-title">Projet 22</div>
-                            <div class="meta-cat">Réseaux Sociaux</div>
-                        </div>
-                        <img src="assets/cover22.jpg" class="project-thumb" alt="Cover">
-                        <video class="project-video" muted loop playsinline preload="none"><source src="assets/projet22.mp4" type="video/mp4"></video>
-                    </a>
-                </article>
-
-                <article class="project-item" data-category="social" data-featured="false" data-cursor-type="project">
-                    <a href="https://drive.google.com/file/d/1uVVUcqiwUNn9BSPonUrLi5t8w8h_lmbO/view?usp=sharing" target="_blank" class="media-container">
-                        <div class="project-meta">
-                            <div class="meta-title">Projet 23</div>
+                            <div class="meta-title">Projet 2</div>
                             <div class="meta-cat">Réseaux Sociaux</div>
                         </div>
                         <img src="assets/cover23.jpg" class="project-thumb" alt="Cover">
@@ -612,109 +1082,197 @@
             </div>
         </section>
 
-        <footer class="footer">
-            <h2 class="footer-title">Travaillons Ensemble</h2>
-            <a href="mailto:contact@mondomaine.com" class="footer-mail" data-cursor-type="link">3vr.contact@gmail.com</a>
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer reveal">
+            <p class="footer-label">Un projet en tête ?</p>
+            <h2 class="footer-title">Travaillons<br>Ensemble</h2>
+            <a href="mailto:3vr.contact@gmail.com" class="footer-mail" data-cursor-type="link">3vr.contact@gmail.com</a>
+            <p class="footer-copy">© 2026 Elvis Perros. Tous droits réservés.</p>
         </footer>
 
     </main>
 
     <script>
-        // --- 1. GESTION DU FILTRAGE (Vanilla JS) ---
+        /* ============================================
+           1. FILTRAGE AVEC CASCADE
+           ============================================ */
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectItems = document.querySelectorAll('.project-item');
 
-        // Fonction pour filtrer
         function filterProjects(filterValue) {
+            let delay = 0;
+
             projectItems.forEach(item => {
                 const category = item.dataset.category;
-                const isFeatured = item.dataset.featured === "true";
-
+                const isFeatured = item.dataset.featured === 'true';
                 let shouldShow = false;
 
                 if (filterValue === 'featured') {
-                    if (isFeatured) shouldShow = true;
+                    shouldShow = isFeatured;
                 } else if (filterValue === 'all') {
                     shouldShow = true;
                 } else {
-                    if (category === filterValue) shouldShow = true;
+                    shouldShow = (category === filterValue);
                 }
 
+                // Reset
+                item.classList.remove('visible', 'hidden');
+                item.style.animationDelay = '';
+
                 if (shouldShow) {
-                    item.classList.remove('hidden');
-                    item.classList.add('fade-in');
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(25px)';
+
+                    // Stagger delay
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                        item.style.animationDelay = `${delay * 0.08}s`;
+                    }, 10);
+
                     item.addEventListener('animationend', () => {
-                        item.classList.remove('fade-in');
+                        item.style.opacity = '';
+                        item.style.transform = '';
+                        item.style.animationDelay = '';
                     }, { once: true });
+
+                    delay++;
                 } else {
                     item.classList.add('hidden');
-                    item.classList.remove('fade-in');
                 }
             });
         }
 
-        // Init: Show featured by default
+        // Init
         filterProjects('featured');
 
-        // Click listeners
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
+                filterBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
                 btn.classList.add('active');
-                const filterValue = btn.getAttribute('data-filter');
-                filterProjects(filterValue);
-            });
-        });
+                btn.setAttribute('aria-pressed', 'true');
+                filterProjects(btn.dataset.filter);
 
-
-        // --- 2. GESTION DU CURSEUR ---
-        const cursorDot = document.querySelector('[data-cursor-dot]');
-        const cursorOutline = document.querySelector('[data-cursor-outline]');
-        
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        const updateCursor = (isHovering, type) => {
-            if (isHovering) {
-                if (type === 'project') document.body.classList.add('hover-project');
-                else document.body.classList.add('hover-link');
-            } else {
-                document.body.classList.remove('hover-project', 'hover-link');
-            }
-        };
-
-        const allInteractive = document.querySelectorAll('[data-cursor-type], .filter-btn');
-        allInteractive.forEach(el => {
-            const type = el.getAttribute('data-cursor-type') === 'project' ? 'project' : 'link';
-            el.addEventListener('mouseenter', () => updateCursor(true, type));
-            el.addEventListener('mouseleave', () => updateCursor(false, type));
-        });
-
-
-        // --- 3. GESTION VIDEO ---
-        const cards = document.querySelectorAll('.project-item');
-        cards.forEach(card => {
-            const video = card.querySelector('video');
-            card.addEventListener('mouseenter', () => {
-                if (video && video.paused) video.play().catch(() => {});
-            });
-            card.addEventListener('mouseleave', () => {
-                if (video && !video.paused) {
-                    video.pause();
-                    video.currentTime = 0;
+                // Scroll to grid on mobile
+                if (window.innerWidth < 768) {
+                    document.getElementById('projectGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
+
+        /* ============================================
+           2. CUSTOM CURSOR (requestAnimationFrame)
+           ============================================ */
+        const isFineMouse = window.matchMedia('(pointer: fine)').matches;
+
+        if (isFineMouse) {
+            const dot = document.getElementById('cursorDot');
+            const outline = document.getElementById('cursorOutline');
+            let mouseX = 0, mouseY = 0;
+            let outlineX = 0, outlineY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                dot.style.left = mouseX + 'px';
+                dot.style.top = mouseY + 'px';
+            });
+
+            function animateCursor() {
+                outlineX += (mouseX - outlineX) * 0.15;
+                outlineY += (mouseY - outlineY) * 0.15;
+                outline.style.left = outlineX + 'px';
+                outline.style.top = outlineY + 'px';
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Cursor hover states
+            const setCursorState = (hovering, type) => {
+                document.body.classList.remove('hover-project', 'hover-link');
+                if (hovering) {
+                    document.body.classList.add(type === 'project' ? 'hover-project' : 'hover-link');
+                }
+            };
+
+            document.querySelectorAll('[data-cursor-type]').forEach(el => {
+                const type = el.dataset.cursorType;
+                el.addEventListener('mouseenter', () => setCursorState(true, type));
+                el.addEventListener('mouseleave', () => setCursorState(false, type));
+            });
+        }
+
+        /* ============================================
+           3. VIDEO — Hover (desktop) + Tap (mobile)
+           ============================================ */
+        document.querySelectorAll('.project-item').forEach(card => {
+            const video = card.querySelector('video');
+            const thumb = card.querySelector('.project-thumb');
+            if (!video) return;
+
+            // Desktop: hover
+            if (isFineMouse) {
+                card.addEventListener('mouseenter', () => {
+                    video.play().catch(() => {});
+                });
+                card.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+            } else {
+                // Mobile: tap to toggle
+                card.addEventListener('click', (e) => {
+                    // Don't prevent link — only toggle if not navigating
+                    if (video.paused) {
+                        video.play().catch(() => {});
+                        card.classList.add('playing');
+                    } else {
+                        video.pause();
+                        video.currentTime = 0;
+                        card.classList.remove('playing');
+                    }
+                });
+            }
+        });
+
+        /* ============================================
+           4. SCROLL REVEAL (Intersection Observer)
+           ============================================ */
+        const revealEls = document.querySelectorAll('.reveal');
+
+        if ('IntersectionObserver' in window) {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealEls.forEach(el => revealObserver.observe(el));
+        } else {
+            revealEls.forEach(el => el.classList.add('is-visible'));
+        }
+
+        /* ============================================
+           5. SMOOTH SCROLL INDICATOR FADE
+           ============================================ */
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        if (scrollIndicator) {
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const opacity = Math.max(0, 1 - scrollY / 300);
+                scrollIndicator.style.opacity = opacity;
+                if (scrollY > 300) scrollIndicator.style.pointerEvents = 'none';
+                else scrollIndicator.style.pointerEvents = '';
+            }, { passive: true });
+        }
     </script>
 </body>
 </html>

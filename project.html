@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet — Elvis Perros</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #141414;
+            --text-primary: #f0f0f0;
+            --text-secondary: #999;
+            --text-muted: #555;
+            --border-subtle: rgba(255,255,255,0.08);
+            --easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        .project-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(1.5rem, 4vw, 4rem);
+        }
+
+        /* ---- BOUTON RETOUR ---- */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            transition: all 0.3s var(--easing);
+            margin-bottom: 2.5rem;
+        }
+
+        .back-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        .back-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            transition: transform 0.3s var(--easing);
+        }
+
+        .back-btn:hover svg {
+            transform: translateX(-4px);
+        }
+
+        /* ---- VIDEO CONTAINER ---- */
+        .video-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .video-wrapper.vertical {
+            aspect-ratio: 9 / 16;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---- INFOS PROJET ---- */
+        .project-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .project-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .project-category {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.06);
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            width: fit-content;
+        }
+
+        .project-description {
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 720px;
+        }
+
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .project-tools span {
+            font-size: 0.72rem;
+            padding: 0.25rem 0.65rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.02em;
+        }
+
+        /* ---- ANIMATION ENTREE ---- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s var(--easing) forwards;
+        }
+
+        .fade-up:nth-child(1) { animation-delay: 0.05s; }
+        .fade-up:nth-child(2) { animation-delay: 0.15s; }
+        .fade-up:nth-child(3) { animation-delay: 0.25s; }
+        .fade-up:nth-child(4) { animation-delay: 0.35s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .video-wrapper.vertical {
+                max-width: 100%;
+            }
+        }
+        .video-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;}
+    </style>
+</head>
+<body>
+    <div class="project-page">
+
+        <a href="index.html" class="back-btn fade-up">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Retour
+        </a>
+
+        <div class="video-wrapper fade-up" id="videoWrapper">
+            <iframe id="projectIframe"
+                src=""
+                width="100%"
+                height="100%"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="project-header fade-up">
+            <span class="project-category" id="projectCategory">—</span>
+            <h1 class="project-title" id="projectTitle">—</h1>
+        </div>
+
+        <p class="project-description fade-up" id="projectDescription">—</p>
+
+        <div class="project-tools fade-up" id="projectTools"></div>
+
+    </div>
+
+    <script>
+        /* ============================================
+           DONNÉES DE TOUS LES PROJETS
+           ============================================ */
+        const projectsData = {
+    "projet1": {
+        title: "Projet 1",
+        category: "Motion Design",
+        preview: "assets/projet1.mp4",
+        fullVideo: "https://drive.google.com/file/d/1lYFiWVdc0cCKZSN7TdsHGXWoZJTjKMLy/preview",
+        vertical: false,
+        description: "Animation motion design réalisée pour explorer les transitions fluides et le rythme visuel.",
+        tools: ["After Effects", "Illustrator"]
+    },
+    "projet2": {
+        title: "Projet 2",
+        category: "Fiction / Docu",
+        preview: "assets/projet2.mp4",
+        fullVideo: "https://drive.google.com/file/d/1IPbNWbakVbxOTtXaUeB-ghFUCuCoynU2/preview",
+        vertical: false,
+        description: "Court-métrage tourné et monté dans une démarche documentaire.",
+        tools: ["Premiere Pro", "DaVinci Resolve"]
+    },
+    "projet3": {
+        title: "Projet 3",
+        category: "Fiction / Docu",
+        preview: "assets/projet3.mp4",
+        fullVideo: "https://drive.google.com/file/d/1-fa482so41z8b5fzKMWPiQHra7UwV8R_/preview",
+        vertical: false,
+        description: "Projet de fiction mettant en avant la direction artistique et le storytelling visuel.",
+        tools: ["Premiere Pro", "After Effects"]
+    },
+    "projet4": {
+        title: "Projet 4",
+        category: "Fiction / Docu",
+        preview: "assets/projet4.mp4",
+        fullVideo: "https://drive.google.com/file/d/197Y8he967PQoP0mOd2XVcWZVmbSdWS6X/preview",
+        vertical: false,
+        description: "Réalisation documentaire avec une approche cinématographique.",
+        tools: ["Premiere Pro", "DaVinci Resolve"]
+    },
+    "projet5": {
+        title: "Projet 5",
+        category: "Réseaux Sociaux",
+        preview: "assets/projet5.mp4",
+        fullVideo: "https://drive.google.com/file/d/1tQghgamArfgHhXLyNFjZrtseeI-VYNcv/preview",
+        vertical: true,
+        description: "Contenu vertical optimisé pour les réseaux sociaux.",
+        tools: ["Premiere Pro", "After Effects"]
+    },
+    "projet6": {
+        title: "Projet 6",
+        category: "Fiction / Docu",
+        preview: "assets/projet6.mp4",
+        fullVideo: "https://drive.google.com/file/d/11vOglsgqMkOBhEoVEoQlc6beYrFIE9bZ/preview",
+        vertical: false,
+        description: "Projet fiction avec un travail poussé sur l'ambiance et la narration visuelle.",
+        tools: ["Premiere Pro", "DaVinci Resolve"]
+    },
+    "projet7": {
+        title: "Projet 7",
+        category: "Motion Design",
+        preview: "assets/projet7.mp4",
+        fullVideo: "https://drive.google.com/file/d/1VwU-CZ10KraNsbTU079rKvWHQ0AnYCHk/preview",
+        vertical: false,
+        description: "Motion design graphique avec animations typographiques et transitions impactantes.",
+        tools: ["After Effects", "Illustrator"]
+    },
+    "projet8": {
+        title: "Projet 8",
+        category: "Motion Design",
+        preview: "assets/projet8.mp4",
+        fullVideo: "https://drive.google.com/file/d/1zO-YNvgzdw7AK3tFelOAJ8qxvSL48Vqo/preview",
+        vertical: false,
+        description: "Animation de formes et d'éléments graphiques.",
+        tools: ["After Effects", "Cinema 4D"]
+    },
+    "projet9": {
+        title: "Projet 9",
+        category: "Fiction / Docu",
+        preview: "assets/projet9.mp4",
+        fullVideo: "https://drive.google.com/file/d/1qxzsnHsT87XGhpbniJ8OFsh0IYAjtaRT/preview",
+        vertical: false,
+        description: "Montage vidéo narratif avec une attention particulière au rythme.",
+        tools: ["Premiere Pro"]
+    },
+    "projet10": {
+        title: "Projet 10",
+        category: "Réseaux Sociaux",
+        preview: "assets/projet10.mp4",
+        fullVideo: "https://drive.google.com/file/d/1NZQQsy80xv9WeHf0LtZWPfP3gnIvdIdE/preview",
+        vertical: true,
+        description: "Contenu social media au format vertical.",
+        tools: ["Premiere Pro", "After Effects"]
+    },
+    "projet11": {
+        title: "Projet 11",
+        category: "Réseaux Sociaux",
+        preview: "assets/projet11.mp4",
+        fullVideo: "https://drive.google.com/file/d/1_FPDEywTMy2dgfbO4J84HXi7Rcmj0o78/preview",
+        vertical: true,
+        description: "Vidéo courte pour Instagram/TikTok avec effets visuels.",
+        tools: ["After Effects", "Premiere Pro"]
+    },
+    "projet12": {
+        title: "Projet 12",
+        category: "Fiction / Docu",
+        preview: "assets/projet12.mp4",
+        fullVideo: "https://drive.google.com/file/d/1C4XPmuHdv48JLRGiIJ2hCNhYfd89EPxZ/preview",
+        vertical: false,
+        description: "Projet documentaire capturant une ambiance à travers le montage.",
+        tools: ["Premiere Pro", "DaVinci Resolve"]
+    },
+    "projet13": {
+        title: "Projet 13",
+        category: "Motion Design",
+        preview: "assets/projet13.mp4",
+        fullVideo: "https://drive.google.com/file/d/1Jss98wrgxVTlnZP0ycqL-YDO_7u6APFU/preview",
+        vertical: false,
+        description: "Animation graphique alliant typographie et éléments vectoriels.",
+        tools: ["After Effects", "Illustrator"]
+    },
+    "projet14": {
+        title: "Projet 14",
+        category: "Réseaux Sociaux",
+        preview: "assets/projet14.mp4",
+        fullVideo: "https://drive.google.com/file/d/1hrh02BpUFi_d6gnYfecAyZwyq3LRMuYs/preview",
+        vertical: true,
+        description: "Contenu créatif pour les réseaux sociaux.",
+        tools: ["Premiere Pro"]
+    },
+    "projet15": {
+        title: "Projet 15",
+        category: "Réseaux Sociaux",
+        preview: "assets/projet15.mp4",
+        fullVideo: "https://drive.google.com/file/d/1TMl2nG6sB43kg5GYTQU5v7HQGmO6KqAT/preview",
+        vertical: true,
+        description: "Vidéo social media avec un montage punchy.",
+        tools: ["Premiere Pro", "After Effects"]
+    },
+    "projet16": {
+        title: "Projet 16",
+        category: "Motion Design",
+        preview: "assets/projet16.mp4",
+        fullVideo: "https://drive.google.com/file/d/1V5bzlu9LsnXePdOVM-UC-u2CFq7w6_u3/preview",
+        vertical: false,
+        description: "Motion design avec un focus sur les transitions et le sound design.",
+        tools: ["After Effects"]
+    },
+    "projet17": {
+        title: "Projet 17",
+        category: "Motion Design",
+        preview: "assets/projet17.mp4",
+        fullVideo: "https://drive.google.com/file/d/1VYgUEkG3h4YSTaAGcWeJmmdvw_CgIhdp/preview",
+        vertical: false,
+        description: "Exploration créative en animation.",
+        tools: ["After Effects", "Cinema 4D"]
+    },
+    "projet18": {
+        title: "Projet 18",
+        category: "Motion Design",
+        preview: "assets/projet18.mp4",
+        fullVideo: "https://drive.google.com/file/d/1zNddDBbYE79S8_fHs2Wfu8iIaw3C2Fj_/preview",
+        vertical: false,
+        description: "Projet d'animation mêlant 2D et éléments graphiques stylisés.",
+        tools: ["After Effects", "Illustrator"]
+    },
+    "projet19": {
+        title: "Projet 19",
+        category: "Motion Design",
+        preview: "assets/projet19.mp4",
+        fullVideo: "https://drive.google.com/file/d/1EDrYQT8aDUnBI_s3JPc5J-QvhBgTkOLl/preview",
+        vertical: false,
+        description: "Motion design dynamique avec un travail sur le rythme musical.",
+        tools: ["After Effects"]
+    },
+    "projet20": {
+        title: "Projet 20",
+        category: "Motion Design",
+        preview: "assets/projet20.mp4",
+        fullVideo: "https://drive.google.com/file/d/1IDI2yjT6VwmJSfuKtCGk5nKEYQqaXSYC/preview",
+        vertical: false,
+        description: "Animation typographique et graphique.",
+        tools: ["After Effects", "Photoshop"]
+    },
+    "projet21": {
+        title: "Projet 21",
+        category: "Motion Design",
+        preview: "assets/projet21.mp4",
+        fullVideo: "https://drive.google.com/file/d/1aiXu7RrS6SXcyqWLyEB06iP7QkqG8X5a/preview",
+        vertical: false,
+        description: "Projet motion design explorant les textures et mouvements organiques.",
+        tools: ["After Effects", "Cinema 4D"]
+    },
+    "projet22": {
+        title: "Projet 22",
+        category: "Réseaux Sociaux",
+        preview: "assets/projet22.mp4",
+        fullVideo: "https://drive.google.com/file/d/1yk95B02tDOcXdlZQ-13rW5sn-rUbPsjk/preview",
+        vertical: true,
+        description: "Contenu vertical créatif pour campagne social media.",
+        tools: ["Premiere Pro", "After Effects"]
+    },
+    "projet23": {
+        title: "Projet 23",
+        category: "Réseaux Sociaux",
+        preview: "assets/projet23.mp4",
+        fullVideo: "https://drive.google.com/file/d/1uVVUcqiwUNn9BSPonUrLi5t8w8h_lmbO/preview",
+        vertical: true,
+        description: "Vidéo format court avec motion design intégré.",
+        tools: ["After Effects", "Premiere Pro"]
+    }
+};
+
+        /* ============================================
+           CHARGER LE PROJET DEPUIS L'URL
+           ============================================ */
+        const params = new URLSearchParams(window.location.search);
+        const projectId = params.get('id');
+        const data = projectsData[projectId];
+
+        if (data) {
+            document.title = `${data.title} — Elvis Perros`;
+            document.getElementById('projectTitle').textContent = data.title;
+            document.getElementById('projectCategory').textContent = data.category;
+            document.getElementById('projectDescription').textContent = data.description;
+
+            // Charger la vidéo complète via Google Drive
+            document.getElementById('projectIframe').src = data.fullVideo;
+
+            if (data.vertical) {
+                document.getElementById('videoWrapper').classList.add('vertical');
+            }
+
+            const toolsContainer = document.getElementById('projectTools');
+            data.tools.forEach(tool => {
+                const span = document.createElement('span');
+                span.textContent = tool;
+                toolsContainer.appendChild(span);
+            });
+        } else {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
