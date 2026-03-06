@@ -1297,16 +1297,7 @@
             // vidéo continue, on ne l'arrête pas
         }
         // si tap court → le lien fonctionne normalement
-    });
-
-    card.addEventListener('touchmove', () => {
-        clearTimeout(pressTimer);
-        if (card.classList.contains('playing')) {
-            video.pause();
-            video.currentTime = 0;
-            card.classList.remove('playing');
-        }
-    }, { passive: true });
+    }); { passive: true };
 }
         });
 
