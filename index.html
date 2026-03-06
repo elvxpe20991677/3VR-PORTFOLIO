@@ -1278,25 +1278,39 @@
                 });
             } else {
     let pressTimer = null;
+    let isLongPress = false;
 
     card.addEventListener('touchstart', (e) => {
+        isLongPress = false;
         pressTimer = setTimeout(() => {
+            isLongPress = true;
             e.preventDefault();
             video.play().catch(() => {});
             card.classList.add('playing');
-        }, 200);
+        }, 100); // 400ms = long press
     }, { passive: false });
 
     card.addEventListener('touchend', (e) => {
         clearTimeout(pressTimer);
-        // la vidéo continue de jouer
+        if (isLongPress) {
+            e.preventDefault(); // empêche la navigation
+            video.pause();
+            video.currentTime = 0;
+            card.classList.remove('playing');
+        }
+        // si tap court → le lien fonctionne normalement
     });
 
     card.addEventListener('touchmove', () => {
         clearTimeout(pressTimer);
+        if (card.classList.contains('playing')) {
+            video.pause();
+            video.currentTime = 0;
+            card.classList.remove('playing');
+        }
     }, { passive: true });
 }
-
+        });
 
         /* ============================================
            4. SCROLL REVEAL (Intersection Observer)
