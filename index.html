@@ -1287,7 +1287,7 @@
             e.preventDefault();
             video.play().catch(() => {});
             card.classList.add('playing');
-        }, 400); // 400ms = long press
+        }, 100); // 400ms = long press
     }, { passive: false });
 
     card.addEventListener('touchend', (e) => {
