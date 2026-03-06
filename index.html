@@ -1291,12 +1291,10 @@
     }, { passive: false });
 
     card.addEventListener('touchend', (e) => {
-        clearTimeout(pressTimer);
+       clearTimeout(pressTimer);
         if (isLongPress) {
-            e.preventDefault(); // empêche la navigation
-            video.pause();
-            video.currentTime = 0;
-            card.classList.remove('playing');
+            e.preventDefault();
+            // vidéo continue, on ne l'arrête pas
         }
         // si tap court → le lien fonctionne normalement
     });
